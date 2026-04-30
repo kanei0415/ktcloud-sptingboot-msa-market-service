@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 plugins {
 	java
 	kotlin("jvm") version "2.3.20" apply false
+	kotlin("kapt") version "1.9.22" apply false
 	kotlin("plugin.spring") version "2.3.20" apply false
 	id("org.springframework.boot") version "3.3.0" apply false
 	id("io.spring.dependency-management") version "1.1.7" apply false

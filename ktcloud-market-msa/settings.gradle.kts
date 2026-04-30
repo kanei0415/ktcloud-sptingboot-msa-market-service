@@ -23,5 +23,6 @@ include(
     "order-service",
     "product",
     "product-service",
-    "common"
+    "common",
+    "client-redis"
 )
