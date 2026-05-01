@@ -1,8 +1,8 @@
 package dev.ktcloud.black.order.order.adapter.infrastructure.jpa.entity
 
 import dev.ktcloud.black.common.domain.entity.BaseOrmEntity
-import dev.ktcloud.black.order.domain.vo.OrderLineItem
-import dev.ktcloud.black.order.domain.vo.OrderStatus
+import dev.ktcloud.black.order.order.domain.vo.OrderLineItem
+import dev.ktcloud.black.order.order.domain.vo.OrderStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

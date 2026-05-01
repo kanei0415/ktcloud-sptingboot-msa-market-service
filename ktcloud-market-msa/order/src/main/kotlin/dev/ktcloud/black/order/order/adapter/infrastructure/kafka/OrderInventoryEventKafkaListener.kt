@@ -1,10 +1,11 @@
 package dev.ktcloud.black.order.order.adapter.infrastructure.kafka
 
-import dev.ktcloud.black.order.application.dto.event.inbound.InventoryReservedResultEvent
-import dev.ktcloud.black.order.application.port.event.OrderInventoryEventListenerPort
-import dev.ktcloud.black.order.application.service.OrderCommandService
-import dev.ktcloud.black.order.domain.vo.InventoryReserveResultState
-import dev.ktcloud.black.order.domain.vo.OrderLineItemStatus
+
+import dev.ktcloud.black.order.order.application.dto.event.inbound.InventoryReservedResultEvent
+import dev.ktcloud.black.order.order.application.port.event.OrderInventoryEventListenerPort
+import dev.ktcloud.black.order.order.application.service.OrderCommandService
+import dev.ktcloud.black.order.order.domain.vo.InventoryReserveResultState
+import dev.ktcloud.black.order.order.domain.vo.OrderLineItemStatus
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 

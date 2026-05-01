@@ -1,8 +1,8 @@
 package dev.ktcloud.black.order.order.adapter.infrastructure.jpa
 
 import dev.ktcloud.black.common.adapter.infrastructure.jpa.EntityMapper
-import dev.ktcloud.black.order.adapter.infrastructure.jpa.entity.Order
-import dev.ktcloud.black.order.domain.entity.OrderDomainEntity
+import dev.ktcloud.black.order.order.adapter.infrastructure.jpa.entity.Order
+import dev.ktcloud.black.order.order.domain.entity.OrderDomainEntity
 import org.springframework.stereotype.Component
 
 @Component
@@ -19,7 +19,7 @@ class OrderMapper: EntityMapper<Order, OrderDomainEntity> {
         return OrderDomainEntity(
             id = entity.id,
             _status = entity.status,
-            orderLineItems = entity.orderLineItems,
+            _orderLineItems = entity.orderLineItems,
         )
     }
 }

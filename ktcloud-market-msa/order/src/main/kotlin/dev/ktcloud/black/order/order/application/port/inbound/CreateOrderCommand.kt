@@ -1,6 +1,6 @@
 package dev.ktcloud.black.order.order.application.port.inbound
 
-import dev.ktcloud.black.order.domain.vo.OrderLineItem
+import dev.ktcloud.black.order.order.domain.vo.OrderLineItem
 
 interface CreateOrderCommand {
     fun create(command: In)

@@ -1,13 +1,12 @@
 package dev.ktcloud.black.order.order.application.service
 
-import dev.ktcloud.black.order.application.dto.event.outbound.InventoryReserveRequestEvent
-import dev.ktcloud.black.order.application.port.event.OrderInventoryEventPublishPort
-import dev.ktcloud.black.order.application.port.inbound.CreateOrderCommand
-import dev.ktcloud.black.order.application.port.outbound.OrderCommandOutboundPort
-import dev.ktcloud.black.order.application.port.outbound.OrderQueryOutboundPort
-import dev.ktcloud.black.order.domain.entity.OrderDomainEntity
-import dev.ktcloud.black.order.domain.vo.OrderLineItemStatus
-import dev.ktcloud.black.order.domain.vo.OrderStatus
+import dev.ktcloud.black.order.order.application.dto.event.outbound.InventoryReserveRequestEvent
+import dev.ktcloud.black.order.order.application.port.event.OrderInventoryEventPublishPort
+import dev.ktcloud.black.order.order.application.port.inbound.CreateOrderCommand
+import dev.ktcloud.black.order.order.application.port.outbound.OrderCommandOutboundPort
+import dev.ktcloud.black.order.order.application.port.outbound.OrderQueryOutboundPort
+import dev.ktcloud.black.order.order.domain.entity.OrderDomainEntity
+import dev.ktcloud.black.order.order.domain.vo.OrderLineItemStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

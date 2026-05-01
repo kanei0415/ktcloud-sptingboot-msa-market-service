@@ -1,8 +1,8 @@
 package dev.ktcloud.black.order.order.adapter.infrastructure.kafka.mapper
 
 import dev.ktcloud.black.common.adapter.infrastructure.kafka.EventMapper
-import dev.ktcloud.black.order.adapter.infrastructure.kafka.model.InventoryReservedResultMessage
-import dev.ktcloud.black.order.application.dto.event.inbound.InventoryReservedResultEvent
+import dev.ktcloud.black.order.order.adapter.infrastructure.kafka.model.InventoryReservedResultMessage
+import dev.ktcloud.black.order.order.application.dto.event.inbound.InventoryReservedResultEvent
 import org.springframework.stereotype.Component
 
 @Component

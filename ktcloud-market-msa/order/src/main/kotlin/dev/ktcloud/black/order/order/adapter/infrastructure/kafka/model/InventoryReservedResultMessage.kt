@@ -1,6 +1,6 @@
 package dev.ktcloud.black.order.order.adapter.infrastructure.kafka.model
 
-import dev.ktcloud.black.order.domain.vo.InventoryReserveResultState
+import dev.ktcloud.black.order.order.domain.vo.InventoryReserveResultState
 
 data class InventoryReservedResultMessage(
     val orderId: Long,

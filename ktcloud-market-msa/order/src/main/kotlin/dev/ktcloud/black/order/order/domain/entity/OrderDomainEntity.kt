@@ -1,9 +1,9 @@
 package dev.ktcloud.black.order.order.domain.entity
 
-import dev.ktcloud.black.order.domain.exception.OrderException
-import dev.ktcloud.black.order.domain.vo.OrderLineItem
-import dev.ktcloud.black.order.domain.vo.OrderLineItemStatus
-import dev.ktcloud.black.order.domain.vo.OrderStatus
+import dev.ktcloud.black.order.order.domain.exception.OrderException
+import dev.ktcloud.black.order.order.domain.vo.OrderLineItem
+import dev.ktcloud.black.order.order.domain.vo.OrderLineItemStatus
+import dev.ktcloud.black.order.order.domain.vo.OrderStatus
 
 data class OrderDomainEntity(
     val id: Long = 0L,
