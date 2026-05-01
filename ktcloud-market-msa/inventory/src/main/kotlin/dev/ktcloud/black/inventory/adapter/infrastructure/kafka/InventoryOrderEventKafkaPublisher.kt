@@ -4,6 +4,7 @@ import dev.ktcloud.black.inventory.adapter.infrastructure.kafka.mapper.Inventory
 import dev.ktcloud.black.inventory.adapter.infrastructure.kafka.model.InventoryReservedResultMessage
 import dev.ktcloud.black.inventory.application.dto.event.outbound.InventoryReservedResultEvent
 import dev.ktcloud.black.inventory.application.port.event.InventoryOrderEventPublishPort
+import kotlinx.coroutines.future.await
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
@@ -19,13 +20,5 @@ class InventoryOrderEventKafkaPublisher(
         val message = mapper.toMessage(event)
 
         val future = kafkaTemplate.send(topicName, message.orderId.toString(), message)
-
-        future.whenComplete { result, ex ->
-            if (ex == null) {
-                println("Sent message to [$topicName] offset:[${result.recordMetadata.offset()}]")
-            } else {
-                System.err.println("Unable to send message to [$topicName] due to : ${ex.message}")
-            }
-        }
     }
 }

@@ -8,4 +8,5 @@ interface EntityMapper<BasePersistenceEntity: BaseEntity, DomainEntity> {
 
     fun toDomainEntity(entity: BasePersistenceEntity): DomainEntity
     fun toDomainEntity(entities: List<BasePersistenceEntity>): List<DomainEntity> = entities.map { toDomainEntity(it) }
+    fun toDomainEntity(entities: Iterable<BasePersistenceEntity>): List<DomainEntity> = entities.map { toDomainEntity(it) }
 }

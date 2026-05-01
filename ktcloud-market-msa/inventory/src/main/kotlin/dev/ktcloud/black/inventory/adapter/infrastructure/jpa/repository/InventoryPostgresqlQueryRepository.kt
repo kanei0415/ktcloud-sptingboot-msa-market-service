@@ -30,6 +30,12 @@ class InventoryPostgresqlQueryRepository(
         return inventoryMapper.toDomainEntity(optional.get())
     }
 
+    override fun fetchAll(): List<InventoryDomainEntity> {
+        val all = repository.findAll()
+
+        return inventoryMapper.toDomainEntity(all)
+    }
+
     override fun fetchInventories(ids: List<Long>): List<InventoryDomainEntity> {
         val inventories = repository.findAllById(ids)
 

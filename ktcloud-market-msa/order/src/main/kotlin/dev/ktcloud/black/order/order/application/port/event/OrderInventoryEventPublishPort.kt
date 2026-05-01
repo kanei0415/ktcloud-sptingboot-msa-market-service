@@ -1,0 +1,7 @@
+package dev.ktcloud.black.order.order.application.port.event
+
+import dev.ktcloud.black.order.application.dto.event.outbound.InventoryReserveRequestEvent
+
+interface OrderInventoryEventPublishPort {
+    fun publish(event: InventoryReserveRequestEvent)
+}

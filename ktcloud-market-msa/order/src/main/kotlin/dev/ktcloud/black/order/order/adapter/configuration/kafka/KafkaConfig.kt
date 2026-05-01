@@ -1,7 +1,7 @@
-package dev.ktcloud.black.inventory.adapter.configuration.kafka
+package dev.ktcloud.black.order.order.adapter.configuration.kafka
 
-import dev.ktcloud.black.inventory.adapter.infrastructure.kafka.model.InventoryReserveRequestMessage
-import dev.ktcloud.black.inventory.adapter.infrastructure.kafka.model.InventoryReservedResultMessage
+import dev.ktcloud.black.order.order.adapter.infrastructure.kafka.model.InventoryReserveRequestMessage
+import dev.ktcloud.black.order.order.adapter.infrastructure.kafka.model.InventoryReservedResultMessage
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -24,7 +24,7 @@ class KafkaConfig(
     private val bootstrapServers: String
 ) {
     @Bean
-    fun inventoryReservedResultKafkaTemplate(): KafkaTemplate<String, InventoryReservedResultMessage> {
+    fun inventoryReservedResultKafkaTemplate(): KafkaTemplate<String, InventoryReserveRequestMessage> {
         val configProps = mapOf(
             ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to bootstrapServers,
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
@@ -39,8 +39,8 @@ class KafkaConfig(
     }
 
     @Bean
-    fun inventoryReserveRequestConsumerFactory(): ConsumerFactory<String, InventoryReserveRequestMessage> {
-        val deserializer = JsonDeserializer(InventoryReserveRequestMessage::class.java).apply {
+    fun inventoryReservedResultConsumerFactory(): ConsumerFactory<String, InventoryReservedResultMessage> {
+        val deserializer = JsonDeserializer(InventoryReservedResultMessage::class.java).apply {
             addTrustedPackages("dev.ktcloud.black.*")
             setUseTypeHeaders(false)
         }
@@ -56,11 +56,11 @@ class KafkaConfig(
     }
 
     @Bean
-    fun inventoryReserveRequestContainerFactory(
+    fun inventoryReservedResultContainerFactory(
         configurer: ConcurrentKafkaListenerContainerFactoryConfigurer
-    ): ConcurrentKafkaListenerContainerFactory<String, InventoryReserveRequestMessage> {
-        val factory = ConcurrentKafkaListenerContainerFactory<String, InventoryReserveRequestMessage>()
-        val cf = inventoryReserveRequestConsumerFactory()
+    ): ConcurrentKafkaListenerContainerFactory<String, InventoryReservedResultMessage> {
+        val factory = ConcurrentKafkaListenerContainerFactory<String, InventoryReservedResultMessage>()
+        val cf = inventoryReservedResultConsumerFactory()
 
         factory.consumerFactory = cf
 
