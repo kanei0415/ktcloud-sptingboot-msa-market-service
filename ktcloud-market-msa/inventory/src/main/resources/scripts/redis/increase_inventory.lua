@@ -1,7 +1,13 @@
-local current = redis.call('get', KEYS[1])
+local exists = redis.call('EXISTS', KEYS[1])
 
-if not current then
+if exists == 0 then
     return -1
 end
 
-return redis.call('incrby', KEYS[1], ARGV[1])
+local new_stock = redis.call('HINCRBY', KEYS[1], 'quantity', ARGV[1])
+
+local eventId = math.max(tonumber(lastEventId), tonumber(ARGV[2]))
+
+redis.call('HSET', KEYS[1], 'lastEventId', toString(eventId))
+
+return new_stock

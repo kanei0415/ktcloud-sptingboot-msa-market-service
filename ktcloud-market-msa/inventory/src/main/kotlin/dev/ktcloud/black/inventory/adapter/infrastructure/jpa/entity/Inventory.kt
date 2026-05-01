@@ -7,13 +7,17 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.annotations.SQLDelete
 import java.sql.Types
 
 @SQLDelete(sql = "UPDATE inventories SET deleted_at = NOW() WHERE id = ?")
 @Entity
-@Table(name = "inventories")
+@Table(
+    name = "inventories",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["product_id", "sku_code"])]
+)
 data class Inventory(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

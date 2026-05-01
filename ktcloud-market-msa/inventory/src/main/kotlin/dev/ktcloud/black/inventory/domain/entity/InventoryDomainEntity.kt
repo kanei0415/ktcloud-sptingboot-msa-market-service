@@ -11,9 +11,17 @@ data class InventoryDomainEntity(
     val quantity: Int
         get() = _quantity
 
+    fun increaseQuantity(amount: Int) {
+        _quantity += amount
+    }
+
     fun decreaseQuantity(amount: Int) {
         if (_quantity < amount) throw InventoryException.InventoryNotEnough()
 
         _quantity -= amount
+    }
+
+    fun setQuantity(amount: Int) {
+        _quantity = amount
     }
 }

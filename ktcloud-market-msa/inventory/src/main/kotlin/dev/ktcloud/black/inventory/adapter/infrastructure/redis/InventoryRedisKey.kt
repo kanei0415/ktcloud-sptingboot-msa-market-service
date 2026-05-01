@@ -1,10 +1,9 @@
 package dev.ktcloud.black.inventory.adapter.infrastructure.redis
 
 data class InventoryRedisKey(
-    val productId: String,
-    val skuCode: String
+    val inventoryId: Long
 ) {
-    fun toRedisKey() = "$productId:$skuCode"
+    fun toRedisKey() = "inventory:$inventoryId"
 
     override fun toString(): String = toRedisKey()
 }

@@ -4,6 +4,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
@@ -24,5 +25,6 @@ include(
     "product",
     "product-service",
     "common",
-    "client-redis"
+    "client-redis",
+    "inventory-event",
 )

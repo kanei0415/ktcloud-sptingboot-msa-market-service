@@ -1,4 +1,4 @@
-package dev.ktcloud.black.inventory.application.port.inbound
+package dev.ktcloud.black.inventory.application.port.inbound.command
 
 interface CreateInventoryCommand {
     fun create(command: In)

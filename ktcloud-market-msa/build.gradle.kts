@@ -2,11 +2,11 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 plugins {
 	java
-	kotlin("jvm") version "2.3.20" apply false
-	kotlin("kapt") version "1.9.22" apply false
-	kotlin("plugin.spring") version "2.3.20" apply false
-	id("org.springframework.boot") version "3.3.0" apply false
-	id("io.spring.dependency-management") version "1.1.7" apply false
+	kotlin("jvm") version "2.3.20"
+	kotlin("kapt") version "1.9.22"
+	kotlin("plugin.spring") version "2.3.20"
+	id("org.springframework.boot") version "3.3.0"
+	id("io.spring.dependency-management") version "1.1.7"
 }
 
 allprojects {
@@ -18,6 +18,10 @@ allprojects {
 	}
 }
 
+kotlin {
+	jvmToolchain(21)
+}
+
 subprojects {
 	apply(plugin = "java")
 	apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -25,9 +29,15 @@ subprojects {
 	apply(plugin = "org.springframework.boot")
 	apply(plugin = "io.spring.dependency-management")
 
+	java {
+		toolchain {
+			languageVersion.set(JavaLanguageVersion.of(21))
+		}
+	}
+
 	configure<JavaPluginExtension> {
 		toolchain {
-			languageVersion.set(JavaLanguageVersion.of(26))
+			languageVersion.set(JavaLanguageVersion.of(21))
 		}
 	}
 
@@ -45,15 +55,7 @@ subprojects {
 		annotationProcessor("org.projectlombok:lombok")
 	}
 
-	tasks.withType<Test> {
-		useJUnitPlatform()
+	tasks.getByName<Jar>("jar") {
+		enabled = true
 	}
-}
-
-tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-	enabled = false
-}
-
-tasks.withType<Jar> {
-	enabled = true
 }

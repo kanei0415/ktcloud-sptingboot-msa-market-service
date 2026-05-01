@@ -24,4 +24,18 @@ sealed class InventoryException {
         HttpStatus.NOT_FOUND,
         e
     )
+
+    class InventoryDataStale(message: String? = null, e: Throwable? = null): CustomException(
+        "004",
+        message ?: "在庫情報が古いんです",
+        HttpStatus.BAD_REQUEST,
+        e
+    )
+
+    class InventoryCacheUnreadable(message: String? = null, e: Throwable? = null): CustomException(
+        "005",
+        message ?: "在庫のキャッシュが読めない状態です",
+        HttpStatus.BAD_REQUEST,
+        e
+    )
 }

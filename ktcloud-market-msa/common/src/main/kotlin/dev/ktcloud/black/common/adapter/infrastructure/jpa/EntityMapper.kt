@@ -7,5 +7,5 @@ interface EntityMapper<BasePersistenceEntity: BaseEntity, DomainEntity> {
     fun toOrmEntity(domainEntities: List<DomainEntity>): List<BasePersistenceEntity> = domainEntities.map { toOrmEntity(it) }
 
     fun toDomainEntity(entity: BasePersistenceEntity): DomainEntity
-    fun toDomainEntityList(entities: List<BasePersistenceEntity>): List<DomainEntity> = entities.map { toDomainEntity(it) }
+    fun toDomainEntity(entities: List<BasePersistenceEntity>): List<DomainEntity> = entities.map { toDomainEntity(it) }
 }

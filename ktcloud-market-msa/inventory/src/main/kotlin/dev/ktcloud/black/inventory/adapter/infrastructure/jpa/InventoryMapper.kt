@@ -21,7 +21,7 @@ class InventoryMapper: EntityMapper<Inventory, InventoryDomainEntity> {
             id = entity.id,
             productId = entity.productId,
             skuCode = entity.skuCode,
-            quantity = entity.quantity,
+            _quantity = entity.quantity,
         )
     }
 }

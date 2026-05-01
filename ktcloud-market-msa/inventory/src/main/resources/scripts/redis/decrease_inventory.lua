@@ -1,11 +1,18 @@
-local current = redis.call('get', KEYS[1])
+local quantity = redis.call('HGET', KEYS[1], 'quantity')
+local lastEventId = redis.call('HGET', KEYS[1], 'lastEventId')
 
-if not current then
+if not quantity then
     return -1
 end
 
-if tonumber(current) < tonumber(ARGV[1]) then
+if tonumber(quantity) < tonumber(ARGV[1]) then
     return -2
 end
 
-return redis.call('decrby', KEYS[1], ARGV[1])
+local decreased_quantity = redis.call('HINCRBY', KEYS[1], 'quantity', tonumber(ARGV[1]))
+
+local eventId = math.max(tonumber(lastEventId), tonumber(ARGV[2]))
+
+redis.call('HSET', KEYS[1], 'lastEventId', toString(eventId))
+
+return decreased_quantity
