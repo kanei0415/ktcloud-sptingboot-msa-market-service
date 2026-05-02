@@ -50,4 +50,4 @@ https://qiita.com/kimyoungho0415/items/bef97541afaff78aa2ee
 - 注文ドメインはOrchestration型Saga等のビジネス処理ロジックのハブになる可能性が高いため
 - 最低１回のメッセージ発信を保証するには「Transactional Outbox」デーブルとスケジューラーを使用する
 
-![AWS デプロイアーキテクチャ](./images/order-worker.png)
+![注文メッセージ](./images/order-worker.png)
