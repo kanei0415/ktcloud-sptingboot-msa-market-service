@@ -8,6 +8,7 @@ resource "local_file" "ansible_inventory" {
     ap-northeast-2b-master-node-01 = aws_instance.ap-northeast-2b-master-node-01.private_ip
     ap-northeast-2b-worker-node-01 = aws_instance.ap-northeast-2b-worker-node-01.private_ip
     ap-northeast-2b-worker-node-02 = aws_instance.ap-northeast-2b-worker-node-02.private_ip
+    ktcloud-nlb-ip                 = aws_lb.kt-cloud-nlb.dns_name
   })
   filename = "${path.module}/../ansible/inventory.ini"
 }
