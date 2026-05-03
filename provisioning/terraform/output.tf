@@ -7,5 +7,5 @@ output "ap-northeast-2b-bastion-node-connect-command" {
 }
 
 output "main-master-node-connect-command" {
-  value = "ssh -A -J ec2-user@${aws_instance.ap-northeast-2b-bastion-node.public_ip} ec2-user@${aws_instance.ap-northeast-2b-master-node-01.public_ip}"
+  value = "ssh -A -J ec2-user@${aws_instance.ap-northeast-2b-bastion-node.public_ip} ec2-user@${aws_instance.ap-northeast-2b-master-node-01.private_ip}"
 }

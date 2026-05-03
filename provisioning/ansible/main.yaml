@@ -7,3 +7,6 @@
 
 - import_playbook: join-master.yaml
 - import_playbook: join-worker.yaml
+
+- import_playbook: helm-setup.yaml
+- import_playbook: nlb-setup.yaml

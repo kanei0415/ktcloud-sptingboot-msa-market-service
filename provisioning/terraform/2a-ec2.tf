@@ -1,25 +1,28 @@
 resource "aws_instance" "ap-northeast-2a-master-node-01" {
-  ami             = "ami-087e08db3e40f7429"
-  instance_type   = "t3.medium"
-  subnet_id       = aws_subnet.private-ap-northeast-2a.id
-  security_groups = [aws_security_group.cluster-node-sg.id]
-  key_name        = aws_key_pair.bastion-node-key.key_name
+  ami                  = "ami-087e08db3e40f7429"
+  instance_type        = "t3.medium"
+  subnet_id            = aws_subnet.private-ap-northeast-2a.id
+  security_groups      = [aws_security_group.cluster-node-sg.id]
+  key_name             = aws_key_pair.bastion-node-key.key_name
+  iam_instance_profile = aws_iam_instance_profile.ktcloud-cluster-node-profile.name
 }
 
 resource "aws_instance" "ap-northeast-2a-master-node-02" {
-  ami             = "ami-087e08db3e40f7429"
-  instance_type   = "t3.medium"
-  subnet_id       = aws_subnet.private-ap-northeast-2a.id
-  security_groups = [aws_security_group.cluster-node-sg.id]
-  key_name        = aws_key_pair.bastion-node-key.key_name
+  ami                  = "ami-087e08db3e40f7429"
+  instance_type        = "t3.medium"
+  subnet_id            = aws_subnet.private-ap-northeast-2a.id
+  security_groups      = [aws_security_group.cluster-node-sg.id]
+  key_name             = aws_key_pair.bastion-node-key.key_name
+  iam_instance_profile = aws_iam_instance_profile.ktcloud-cluster-node-profile.name
 }
 
 resource "aws_instance" "ap-northeast-2a-worker-node-01" {
-  ami             = "ami-087e08db3e40f7429"
-  instance_type   = "t3.medium"
-  subnet_id       = aws_subnet.private-ap-northeast-2a.id
-  security_groups = [aws_security_group.cluster-node-sg.id]
-  key_name        = aws_key_pair.bastion-node-key.key_name
+  ami                  = "ami-087e08db3e40f7429"
+  instance_type        = "t3.medium"
+  subnet_id            = aws_subnet.private-ap-northeast-2a.id
+  security_groups      = [aws_security_group.cluster-node-sg.id]
+  key_name             = aws_key_pair.bastion-node-key.key_name
+  iam_instance_profile = aws_iam_instance_profile.ktcloud-cluster-node-profile.name
 }
 
 resource "aws_ebs_volume" "ap-northeast-2a-worker-01-ebs" {
