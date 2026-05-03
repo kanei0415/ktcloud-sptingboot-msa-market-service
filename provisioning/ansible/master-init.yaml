@@ -23,6 +23,7 @@
       register: init_output
       args:
         creates: /etc/kubernetes/admin.conf
+      ignore_errors: true
 
     - name: kubectlのためのkubeconfig設定
       ansible.builtin.file:

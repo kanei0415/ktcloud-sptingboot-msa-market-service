@@ -5,6 +5,7 @@ resource "aws_instance" "ap-northeast-2b-master-node-01" {
   security_groups      = [aws_security_group.cluster-node-sg.id]
   key_name             = aws_key_pair.bastion-node-key.key_name
   iam_instance_profile = aws_iam_instance_profile.ktcloud-cluster-node-profile.name
+  source_dest_check    = false
 }
 
 resource "aws_instance" "ap-northeast-2b-worker-node-01" {
@@ -14,6 +15,7 @@ resource "aws_instance" "ap-northeast-2b-worker-node-01" {
   security_groups      = [aws_security_group.cluster-node-sg.id]
   key_name             = aws_key_pair.bastion-node-key.key_name
   iam_instance_profile = aws_iam_instance_profile.ktcloud-cluster-node-profile.name
+  source_dest_check    = false
 }
 
 resource "aws_ebs_volume" "ap-northeast-2b-worker-01-ebs" {
@@ -34,6 +36,7 @@ resource "aws_instance" "ap-northeast-2b-worker-node-02" {
   security_groups      = [aws_security_group.cluster-node-sg.id]
   key_name             = aws_key_pair.bastion-node-key.key_name
   iam_instance_profile = aws_iam_instance_profile.ktcloud-cluster-node-profile.name
+  source_dest_check    = false
 }
 
 resource "aws_ebs_volume" "ap-northeast-2b-worker-02-ebs" {
