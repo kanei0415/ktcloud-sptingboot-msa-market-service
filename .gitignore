@@ -7,3 +7,5 @@
 *.tfvars.json
 
 crash.log
+
+provisioning/ansible/inventory.ini

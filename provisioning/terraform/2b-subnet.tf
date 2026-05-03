@@ -4,6 +4,11 @@ resource "aws_subnet" "public-ap-northeast-2b" {
   availability_zone = "ap-northeast-2b"
 }
 
+resource "aws_route_table_association" "public-2b-assoc" {
+  subnet_id      = aws_subnet.public-ap-northeast-2b.id
+  route_table_id = aws_route_table.kt-cloud-public-rt.id
+}
+
 resource "aws_subnet" "private-ap-northeast-2b" {
   vpc_id            = aws_vpc.kt-cloud-vpc.id
   cidr_block        = "10.0.4.0/24"
