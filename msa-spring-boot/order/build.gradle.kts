@@ -1,0 +1,27 @@
+plugins {
+    kotlin("jvm")
+    kotlin("kapt")
+}
+
+dependencies {
+    implementation(project(":common"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    implementation("org.springframework.kafka:spring-kafka")
+
+    runtimeOnly("com.h2database:h2")
+
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    kapt("jakarta.persistence:jakarta.persistence-api")
+    kapt("jakarta.annotation:jakarta.annotation-api")
+}
+
+sourceSets {
+    main {
+        kotlin.srcDir("build/generated/source/kapt/main")
+    }
+}

@@ -1,0 +1,11 @@
+services:
+  db:
+    image: docker.io/library/postgres:18-alpine
+    container_name: product-service-postgresql-db
+    restart: always
+    environment:
+      POSTGRES_USER: product-service
+      POSTGRES_PASSWORD: product-service
+      POSTGRES_DB: product_db
+    ports:
+      - "7001:5432"
