@@ -6,3 +6,10 @@ spring:
     username: product-service
     password: product-service
     driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8001
+
+grpc:
+  server:
+    port: 9001

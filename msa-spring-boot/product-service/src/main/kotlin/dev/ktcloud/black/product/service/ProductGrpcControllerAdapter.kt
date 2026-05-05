@@ -4,11 +4,9 @@ import dev.ktcloud.black.product.application.port.inbound.CreateProductCommand
 import dev.ktcloud.black.product.application.port.inbound.FetchAllProductsQuery
 import dev.ktcloud.black.product.application.port.inbound.FetchProductQuery
 import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.CreateProductRequest
-import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.CreateProductResponse
 import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.Empty
 import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.FetchAllProductsResponse
 import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.FetchProductRequest
-import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.FetchProductResponse
 import dev.ktcloud.black.product.service.adapter.presentation.web.inbound.grpc.ProductResponseDto
 import dev.ktcloud.black.product.service.adapter.web.inbound.ProductGrpcController
 import net.devh.boot.grpc.server.service.GrpcService
@@ -31,7 +29,7 @@ class ProductGrpcControllerAdapter(
         .setPrice(price)
         .build()
 
-    override suspend fun createProduct(request: CreateProductRequest): CreateProductResponse {
+    override suspend fun createProduct(request: CreateProductRequest): ProductResponseDto {
         val created = createProductCommand.createProduct(
             CreateProductCommand.In(
                 name = request.name,
@@ -40,35 +38,27 @@ class ProductGrpcControllerAdapter(
             )
         )
 
-        val productDto = buildProductResponseDto(
+        return buildProductResponseDto(
             id = created.name,
             name = created.name,
             description = created.description,
             price = created.price
         )
-
-        return CreateProductResponse.newBuilder()
-            .setProduct(productDto)
-            .build()
     }
 
-    override suspend fun fetchProduct(request: FetchProductRequest): FetchProductResponse {
+    override suspend fun fetchProduct(request: FetchProductRequest): ProductResponseDto {
         val product = fetchProductQuery.fetch(
             FetchProductQuery.In(
                 id = request.id
             )
         )
 
-        val productDto = buildProductResponseDto(
+        return buildProductResponseDto(
             id = product.name,
             name = product.name,
             description = product.description,
             price = product.price
         )
-
-        return FetchProductResponse.newBuilder()
-            .setProduct(productDto)
-            .build()
     }
 
     override suspend fun fetchAll(request: Empty): FetchAllProductsResponse {

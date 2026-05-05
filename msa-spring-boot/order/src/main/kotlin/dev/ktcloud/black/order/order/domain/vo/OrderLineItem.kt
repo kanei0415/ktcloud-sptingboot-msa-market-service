@@ -9,7 +9,7 @@ data class OrderLineItem(
     val skuCode: String,
     val price: Int,
     val quantity: Int,
-    val status: OrderLineItemStatus,
+    val status: OrderLineItemStatus = OrderLineItemStatus.PENDING,
 ) {
     fun copy(newStatus: OrderLineItemStatus): OrderLineItem {
         return OrderLineItem(

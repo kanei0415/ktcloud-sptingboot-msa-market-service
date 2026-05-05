@@ -2,9 +2,11 @@ package dev.ktcloud.black.client.redis.api
 
 import dev.ktcloud.black.client.redis.extension.awaitResponse
 import org.redisson.api.RedissonClient
+import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
+@Component
 class DistributedLock(
     private val redissonClient: RedissonClient
 ) {

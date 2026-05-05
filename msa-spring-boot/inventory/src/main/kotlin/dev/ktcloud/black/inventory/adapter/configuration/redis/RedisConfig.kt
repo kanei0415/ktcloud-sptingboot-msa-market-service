@@ -6,7 +6,7 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.data.redis.core.script.RedisScript
 
 @Configuration
-sealed class RedisConfig {
+class RedisConfig {
     enum class InventoryScriptError(val errorCode: Int) {
         NO_CACHED_INVENTORY_FOUND(-1), INVENTORY_NOT_ENOUGH(-2), INVENTORY_DATA_STALE(-3);
     }

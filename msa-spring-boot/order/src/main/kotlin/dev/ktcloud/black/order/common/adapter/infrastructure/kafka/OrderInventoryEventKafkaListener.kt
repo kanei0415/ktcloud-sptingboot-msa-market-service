@@ -16,7 +16,7 @@ class OrderInventoryEventKafkaListener(
     @KafkaListener(
         topics = ["\${spring.kafka.topic.inventory-reserved-result}"],
         groupId = "inventory-service-group",
-        containerFactory = "inventoryReservedResponseContainerFactory"
+        containerFactory = "inventoryReservedResultContainerFactory"
     )
     override fun onResultPublished(event: InventoryReservedResultEvent) {
         if (event.resultState == InventoryReserveResultState.SUCCESS)

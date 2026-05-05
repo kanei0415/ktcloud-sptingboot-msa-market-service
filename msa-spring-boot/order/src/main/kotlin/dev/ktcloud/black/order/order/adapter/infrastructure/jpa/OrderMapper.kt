@@ -11,7 +11,7 @@ class OrderMapper: EntityMapper<Order, OrderDomainEntity> {
         return Order(
             id = domainEntity.id,
             status = domainEntity.status,
-            orderLineItems = domainEntity.orderLineItems,
+            orderLineItems = domainEntity.orderLineItems.toMutableList(),
         )
     }
 

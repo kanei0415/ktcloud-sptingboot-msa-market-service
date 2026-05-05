@@ -18,4 +18,10 @@ class OrderPostgresqlQueryRepository(
 
         return orderMapper.toDomainEntity(orderOrmEntity.get())
     }
+
+    override fun fetchAll(): List<OrderDomainEntity> {
+        val ormEntities = repository.findAll()
+
+        return orderMapper.toDomainEntity(ormEntities)
+    }
 }

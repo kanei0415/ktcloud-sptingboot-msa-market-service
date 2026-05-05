@@ -6,8 +6,8 @@ option java_package = "dev.ktcloud.black.product.service.adapter.presentation.we
 package product.service;
 
 service ProductService {
-  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
-  rpc FetchProduct (FetchProductRequest) returns (FetchProductResponse);
+  rpc CreateProduct (CreateProductRequest) returns (ProductResponseDto);
+  rpc FetchProduct (FetchProductRequest) returns (ProductResponseDto);
   rpc FetchAll (Empty) returns (FetchAllProductsResponse);
 }
 
@@ -24,16 +24,8 @@ message CreateProductRequest {
   int32 price = 3;
 }
 
-message CreateProductResponse {
-    ProductResponseDto product = 1;
-}
-
 message FetchProductRequest {
   string id = 1;
-}
-
-message FetchProductResponse {
-  ProductResponseDto product = 1;
 }
 
 message Empty {}
