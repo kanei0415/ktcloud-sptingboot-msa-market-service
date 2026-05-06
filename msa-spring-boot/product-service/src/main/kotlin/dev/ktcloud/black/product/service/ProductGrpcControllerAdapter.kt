@@ -39,7 +39,7 @@ class ProductGrpcControllerAdapter(
         )
 
         return buildProductResponseDto(
-            id = created.name,
+            id = created.id,
             name = created.name,
             description = created.description,
             price = created.price
@@ -54,7 +54,7 @@ class ProductGrpcControllerAdapter(
         )
 
         return buildProductResponseDto(
-            id = product.name,
+            id = product.id,
             name = product.name,
             description = product.description,
             price = product.price
@@ -66,7 +66,7 @@ class ProductGrpcControllerAdapter(
 
         val productDtoList = products.map {
             buildProductResponseDto(
-                id = it.name,
+                id = it.id,
                 name = it.name,
                 description = it.description,
                 price = it.price

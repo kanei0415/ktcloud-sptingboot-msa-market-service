@@ -13,6 +13,6 @@ local decreased_quantity = redis.call('HINCRBY', KEYS[1], 'quantity', tonumber(A
 
 local eventId = math.max(tonumber(lastEventId), tonumber(ARGV[2]))
 
-redis.call('HSET', KEYS[1], 'lastEventId', toString(eventId))
+redis.call('HSET', KEYS[1], 'lastEventId', tostring(eventId))
 
 return decreased_quantity

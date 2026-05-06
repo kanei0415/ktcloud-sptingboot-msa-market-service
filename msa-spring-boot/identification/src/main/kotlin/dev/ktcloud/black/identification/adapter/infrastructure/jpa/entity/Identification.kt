@@ -5,10 +5,7 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.annotations.SQLDelete
-import org.hibernate.annotations.UuidGenerator
-import java.sql.Types
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -17,8 +14,7 @@ import java.util.UUID
 @Table(name = "identifications")
 class Identification(
     @Id
-    @UuidGenerator
-    @JdbcTypeCode(Types.VARCHAR)
+    @Column(columnDefinition = "uuid")
     val id: UUID,
 
     @Column

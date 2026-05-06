@@ -1,10 +1,13 @@
 plugins {
     kotlin("jvm")
     kotlin("kapt")
+    kotlin("plugin.jpa")
 }
 
 dependencies {
     implementation(project(":common"))
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 

@@ -6,6 +6,12 @@ spring:
     username: product-service
     password: product-service
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
+
 
 server:
   port: 8001
@@ -13,3 +19,13 @@ server:
 grpc:
   server:
     port: 9001
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        health: healthz
+  endpoint:
+    health:
+      show-details: always

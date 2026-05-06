@@ -8,10 +8,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.annotations.SQLDelete
-import org.hibernate.annotations.UuidGenerator
-import java.sql.Types
 import java.util.UUID
 
 @SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE id = ?")
@@ -19,8 +16,7 @@ import java.util.UUID
 @Table(name = "users")
 class User(
     @Id
-    @UuidGenerator
-    @JdbcTypeCode(Types.VARCHAR)
+    @Column(columnDefinition = "uuid")
     val id: UUID,
 
     @Column
