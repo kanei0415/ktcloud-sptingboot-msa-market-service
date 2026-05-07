@@ -101,7 +101,7 @@
 
 ### NLB을 클러스터에 등록하기 위한 IAM 롤
 - EKS가 아니라、EC2에서 구축한 클러스터는 NLB를 등록하기 위해 노드에 이하의 IAM정책이 필요하다
-https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.7.2/docs/install/iam_policy.json
+https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/docs/install/iam_policy.json
 - 「ktcloud-cluster-node-role」의IAM Role에 아까 IAM정책을 붙여서 준비하자
 
 ### Terrafrom
@@ -123,7 +123,7 @@ output "ap-northeast-2b-bastion-node-connect-command" {
 ```
 
 ### Ansible
-- inventory.iniがterraform의.tftpl에서 작성되어
+- inventory.ini가terraform의.tftpl에서 작성되어
 - ping이 도달하는지 확인하다.
 ```terminal
 ➜  ansible git:(master) ansible all -m ping -i inventory.ini
@@ -162,4 +162,26 @@ ip-10-0-4-6.ap-northeast-2.compute.internal     Ready    <none>          39m   v
 NAME                                            READY   STATUS    RESTARTS   AGE
 aws-load-balancer-controller-5cdc56445f-9xn6t   1/1     Running   0          2m15s
 aws-load-balancer-controller-5cdc56445f-gmrcr   1/1     Running   0          2m15s
+```
+- argocd cli를 설치
+```terminal
+sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+
+sudo chmod +x /usr/local/bin/argocd
+
+argocd version --client
+```
+- argocd login
+```terminal
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+argocd login <b-master-01-ip>:30080 --username admin --insecure
+```
+- argocd command, Traefik은 Degraded에서 Healthy 까지 5분 이상 걸린다
+```terminal
+argocd app list
+
+argocd app get argocd/root-app
+
+argocd app sync root-app --prune
 ```
