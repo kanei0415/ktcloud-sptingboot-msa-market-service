@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation("com.github.kanei0415:ktcloud-msa-common:v1.0.2")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 

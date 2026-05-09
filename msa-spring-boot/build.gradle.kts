@@ -1,9 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
-object Versions {
-	val KOTLIN = "2.3.20"
-}
-
 plugins {
 	java
 	kotlin("jvm") version "2.3.20"
@@ -12,15 +8,6 @@ plugins {
 	kotlin("plugin.jpa") version "2.3.20"
 	id("org.springframework.boot") version "3.3.0"
 	id("io.spring.dependency-management") version "1.1.7"
-}
-
-allprojects {
-	group = "dev.ktcloud.black"
-	version = "0.0.1-SNAPSHOT"
-
-	repositories {
-		mavenCentral()
-	}
 }
 
 kotlin {
