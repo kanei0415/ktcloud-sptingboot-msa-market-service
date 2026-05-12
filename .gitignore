@@ -58,3 +58,29 @@ msa-provisioning/**/id_rsa*
 msa-provisioning/**/.DS_Store
 msa-provisioning/**/.idea/
 msa-provisioning/**/.vscode/
+
+# Logs
+msa-frontend/**/logs
+msa-frontend/**/*.log
+msa-frontend/**/npm-debug.log*
+msa-frontend/**/yarn-debug.log*
+msa-frontend/**/msa-frontend/**/yarn-error.log*
+pnpm-debug.log*
+msa-frontend/**/lerna-debug.log*
+
+msa-frontend/**/node_modules
+msa-frontend/**/dist
+msa-frontend/**/dist-ssr
+msa-frontend/**/*.local
+
+# Editor directories and files
+msa-frontend/**/.vscode/*
+msa-frontend/**/!.vscode/extensions.json
+msa-frontend/**/.idea
+msa-frontend/**/.DS_Store
+msa-frontend/**/*.suo
+msa-frontend/**/*.ntvs*
+msa-frontend/**/*.njsproj
+msa-frontend/**/*.sln
+msa-frontend/**/*.sw?
+msa-frontend/**/.env

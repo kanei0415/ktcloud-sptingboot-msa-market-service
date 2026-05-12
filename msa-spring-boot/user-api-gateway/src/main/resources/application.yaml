@@ -13,9 +13,9 @@ grpc:
     inventory-service:
       address: 'static://localhost:9003'
       negotiation-type: plaintext
-
-jwt:
-  secret: 'v7S6A9yB2E5H8KcNfUjXnZr4u7x!A%D*G-'
+    auth-service:
+      address: 'static://localhost:9005'
+      negotiation-type: plaintext
 
 server:
   port: 8100
