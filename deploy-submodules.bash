@@ -6,7 +6,7 @@ MODULES=(
     ["ktcloud-msa-user-api-gateway"]="user-api-gateway"
     ["ktcloud-msa-order-service"]="common order-service order"
     ["ktcloud-msa-product-service"]="common product-service product"
-    ["ktcloud-msa-auth-service"]="common user auth"
+    ["ktcloud-msa-auth-service"]="common user auth auth-service"
 )
 
 COMMON_FILES=("gradlew" "gradlew.bat" "gradle" "build.gradle.kts" ".gitignore")
@@ -25,14 +25,14 @@ for REPO in "${!MODULES[@]}"; do
     mkdir -p "$WORK_PATH"
 
     for FILE in "${COMMON_FILES[@]}"; do
-        if [ -e "$FILE" ]; then
-            cp -R "msa-spring-boot/$FILE" "$WORK_PATH/"
+        if [ -e "./msa-spring-boot/$FILE" ]; then
+            cp -R "./msa-spring-boot/$FILE" "$WORK_PATH/"
         fi
     done
 
     for SUBMODULE in "${SUBMODULE_LIST[@]}"; do
-        if [ -d "$SUBMODULE" ]; then
-            cp -R "msa-spring-boot/$SUBMODULE" "$WORK_PATH/"
+        if [ -d "./msa-spring-boot/$SUBMODULE" ]; then
+            cp -R "./msa-spring-boot/$SUBMODULE" "$WORK_PATH/"
         fi
     done
 

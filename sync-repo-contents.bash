@@ -1,3 +1,7 @@
+rm -rf msa-frontend
+rm -rf msa-provisioning
+rm -rf msa-spring-boot
+
 cp -r ../troica/msa-spring-boot ./
 cp -r ../msa-provisioning ./
 cp -r ../troica/msa-frontend ./
