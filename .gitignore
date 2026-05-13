@@ -1,40 +1,40 @@
 .vscode
 
-msa-spring-boot/**/.idea/
-msa-spring-boot/**/*.iws
-msa-spring-boot/**/*.iml
-msa-spring-boot/**/*.ipr
-msa-spring-boot/**/out/
-msa-spring-boot/**/bin/
+**/.idea/
+**/*.iws
+**/*.iml
+**/*.ipr
+**/out/
+**/bin/
 
-msa-spring-boot/**/.gradle/
-msa-spring-boot/**/build/
-!msa-spring-boot/**/gradle/wrapper/gradle-wrapper.jar
-!msa-spring-boot/**/gradle/wrapper/gradle-wrapper.properties
+**/.gradle/
+**/build/
+!**/gradle/wrapper/gradle-wrapper.jar
+!**/gradle/wrapper/gradle-wrapper.properties
 
-msa-spring-boot/**/*.kotlin_module
-msa-spring-boot/**/.kotlin/
+**/*.kotlin_module
+**/.kotlin/
 
-msa-spring-boot/**/**/generated/
-msa-spring-boot/**/**/generated-sources/
-msa-spring-boot/**/**/generated-test-sources/
+**/**/generated/
+**/**/generated-sources/
+**/**/generated-test-sources/
 
-msa-spring-boot/**/*.class
-msa-spring-boot/**/*.log
-msa-spring-boot/**/*.jar
-msa-spring-boot/**/*.war
-msa-spring-boot/**/*.ear
-msa-spring-boot/**/*.zip
-msa-spring-boot/**/*.tar.gz
-msa-spring-boot/**/*.rar
+**/*.class
+**/*.log
+**/*.jar
+**/*.war
+**/*.ear
+**/*.zip
+**/*.tar.gz
+**/*.rar
 
-msa-spring-boot/**/*.properties
-!msa-spring-boot/**/**/src/main/resources/*.properties
-msa-spring-boot/**/.env
-msa-spring-boot/**/.env.local
+**/*.properties
+!**/**/src/main/resources/*.properties
+**/.env
+**/.env.local
 
-msa-spring-boot/**/.DS_Store
-msa-spring-boot/**/Thumbs.db
+**/.DS_Store
+**/Thumbs.db
 
 
 msa-provisioning/**/*.tfstate

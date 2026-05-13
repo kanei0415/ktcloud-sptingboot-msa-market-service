@@ -26,13 +26,13 @@ for REPO in "${!MODULES[@]}"; do
 
     for FILE in "${COMMON_FILES[@]}"; do
         if [ -e "$FILE" ]; then
-            cp -R "$FILE" "$WORK_PATH/"
+            cp -R "msa-spring-boot/$FILE" "$WORK_PATH/"
         fi
     done
 
     for SUBMODULE in "${SUBMODULE_LIST[@]}"; do
         if [ -d "$SUBMODULE" ]; then
-            cp -R "$SUBMODULE" "$WORK_PATH/"
+            cp -R "msa-spring-boot/$SUBMODULE" "$WORK_PATH/"
         fi
     done
 
@@ -42,11 +42,11 @@ for REPO in "${!MODULES[@]}"; do
     git add .
     git commit -m "Split modules [${SUBMODULE_LIST[*]}] to $REPO"
 
-    if ! gh repo view "$GH_USER/$REPO" >/dev/null 2>&1; then
-        gh repo create "$GH_USER/$REPO" --public --source=. --remote=origin --push
+    if ! gh repo view "ktcloud-msa/$REPO" >/dev/null 2>&1; then
+        gh repo create "ktcloud-msa/$REPO" --public --source=. --remote=origin --push
     else
         if ! git remote | grep origin > /dev/null; then
-            git remote add origin "https://github.com/$GH_USER/$REPO.git"
+            git remote add origin "https://github.com/ktcloud-msa/$REPO.git"
         fi
         git branch -M main
         git push -u origin main --force
