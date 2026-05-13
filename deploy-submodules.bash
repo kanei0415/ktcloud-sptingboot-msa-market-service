@@ -26,13 +26,13 @@ for REPO in "${!MODULES[@]}"; do
 
     for FILE in "${COMMON_FILES[@]}"; do
         if [ -e "./msa-spring-boot/$FILE" ]; then
-            cp -R "./msa-spring-boot/$FILE" "$WORK_PATH/"
+            rm -rf "$WORK_PATH/$FILE" && cp -R "./msa-spring-boot/$FILE" "$WORK_PATH/"
         fi
     done
 
     for SUBMODULE in "${SUBMODULE_LIST[@]}"; do
         if [ -d "./msa-spring-boot/$SUBMODULE" ]; then
-            cp -R "./msa-spring-boot/$SUBMODULE" "$WORK_PATH/"
+            rm -rf "$WORK_PATH/$SUBMODULE" && cp -R "./msa-spring-boot/$SUBMODULE" "$WORK_PATH/"
         fi
     done
 
