@@ -1,5 +1,5 @@
 cp -r ../troica/msa-spring-boot ./
-cp -r ../troica/msa-provisioning ./
+cp -r ../msa-provisioning ./
 cp -r ../troica/msa-frontend ./
 
 rm -rf ./msa-spring-boot/.git

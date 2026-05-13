@@ -1,7 +1,6 @@
 *.tfstate
 *.tfstate.*
 .terraform/
-.terraform.lock.hcl
 
 *.tfvars
 *.tfvars.json
@@ -21,3 +20,5 @@ id_rsa*
 .vscode/
 
 ansible/inventory.ini
+
+.env

@@ -51,3 +51,8 @@ https://qiita.com/kimyoungho0415/items/bef97541afaff78aa2ee
 - 最低１回のメッセージ発信を保証するには「Transactional Outbox」デーブルとスケジューラーを使用する
 
 ![注文メッセージ](./images/order-worker.png)
+
+### Split Backend Repo
+```terminal
+/opt/homebrew/bin/bash deploy-submodules.bash
+```
