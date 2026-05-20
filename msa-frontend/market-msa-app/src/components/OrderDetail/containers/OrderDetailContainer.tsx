@@ -1,7 +1,19 @@
-import Order from "@components/Order/Order"
+import { useOrder } from '@services/rest-api/order-service';
+import OrderDetail from '../OrderDetail';
+import QueryStateGate from '@components/common/QueryStateGate/QueryStateGate';
 
-const OrderDetailContainer = () => {
-  return <Order />
+interface Props {
+  id: string;
 }
 
-export default OrderDetailContainer
+const OrderDetailContainer = ({ id }: Props) => {
+  const { data, isPending, error, refetch } = useOrder(id);
+
+  return (
+    <QueryStateGate isPending={isPending} error={error} onRetry={() => refetch()}>
+      {data && <OrderDetail order={data.order} />}
+    </QueryStateGate>
+  );
+};
+
+export default OrderDetailContainer;

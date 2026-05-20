@@ -1,23 +1,56 @@
-import { createRouter, RouterProvider } from '@tanstack/react-router'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { routeTree } from '../routeTree.gen'
+import { useEffect } from 'react';
+import { RouterProvider } from '@tanstack/react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import theme from '@libs/theme';
+import { router } from '@libs/router';
+import { setUnauthorizedHandler } from '@libs/auth-events';
+import { useAuthStore } from '@store/useAuthStore';
+import ErrorBoundary from '@components/common/ErrorBoundary/ErrorBoundary';
+import { SnackbarProvider } from '@components/common/Snackbar/SnackbarProvider';
 
-const router = createRouter({ routeTree })
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      gcTime: 5 * 60_000,
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+    mutations: {
+      retry: 0,
+    },
+  },
+});
 
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
+function UnauthorizedBridge() {
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      useAuthStore.getState().clearAuth();
+      queryClient.clear();
+      router.navigate({ to: '/sign-in' });
+    });
+    return () => setUnauthorizedHandler(null);
+  }, []);
+  return null;
 }
-
-const queryClient = new QueryClient()
 
 const TanStackProvider = () => {
-  return <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>
-}
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <SnackbarProvider>
+            <UnauthorizedBridge />
+            <RouterProvider router={router} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </SnackbarProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </ThemeProvider>
+  );
+};
 
-export default TanStackProvider
+export default TanStackProvider;

@@ -1,0 +1,25 @@
+---
+kubernetes_version: "1.30"
+pod_subnet: "192.168.0.0/16"
+
+containerd_cri_socket: "unix:///var/run/containerd/containerd.sock"
+
+ec2_user: "ec2-user"
+kubeconfig_path: "/home/ec2-user/.kube/config"
+admin_conf_path: "/etc/kubernetes/admin.conf"
+
+calico_version: "v3.27.0"
+
+helm_version: "v3.14.0"
+
+argocd_namespace: "argocd"
+argocd_root_app_repo: "https://github.com/kanei0415/ktcloud-k8s-argocd-manifest.git"
+argocd_root_app_path: "Setup"
+argocd_root_path: "/argocd"
+
+# aws_region は terraform inventory が all:vars に流すのでこちらは override 用 fallback
+aws_lbc_namespace: "kube-system"
+aws_ccm_namespace: "kube-system"
+
+# wait_workers は AWS API で各 ASG の DesiredCapacity を毎回引くので Ansible 側に
+# 期待ノード数の静的設定は不要 (CA scale 後に再 run しても破綻しないようにするため)。

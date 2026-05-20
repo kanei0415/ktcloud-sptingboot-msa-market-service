@@ -22,3 +22,9 @@ id_rsa*
 ansible/inventory.ini
 
 .env
+
+.claude
+
+.kube
+
+record_result.mp4

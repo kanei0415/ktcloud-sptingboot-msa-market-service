@@ -7,29 +7,46 @@ import {
   Paper,
   Stack,
   InputAdornment,
-  Divider
+  Divider,
 } from '@mui/material';
 import {
   EmailOutlined,
   LockOutlined,
   PersonOutlined,
-  AppRegistrationOutlined
+  AppRegistrationOutlined,
 } from '@mui/icons-material';
-import { Link } from '@tanstack/react-router';
 import { ROUTE_PATHS } from '@libs/route-config';
+import { palette } from '@libs/theme';
+import { ButtonLink } from '@libs/router-link';
 
-type Props = {
+interface Props {
+  email: string;
+  password: string;
+  name: string;
+  emailError: string;
+  passwordError: string;
+  nameError: string;
+  isSubmitting: boolean;
+  canSubmit: boolean;
   onSignUpButtonClicked: () => void;
   onEmailChanged: (email: string) => void;
   onPasswordChanged: (password: string) => void;
   onNameChanged: (name: string) => void;
-};
+}
 
 const SignUp = ({
+  email,
+  password,
+  name,
+  emailError,
+  passwordError,
+  nameError,
+  isSubmitting,
+  canSubmit,
   onSignUpButtonClicked,
   onEmailChanged,
   onPasswordChanged,
-  onNameChanged
+  onNameChanged,
 }: Props) => {
   return (
     <Container maxWidth="xs">
@@ -40,12 +57,12 @@ const SignUp = ({
             p: 4,
             width: '100%',
             borderRadius: 3,
-            borderTop: '6px solid #38bdf8'
+            borderTop: `6px solid ${palette.sky}`,
           }}
         >
-          <Stack spacing={1} alignItems="center" sx={{ mb: 3 }}>
-            <AppRegistrationOutlined sx={{ fontSize: 40, color: '#38bdf8' }} />
-            <Typography variant="h5" fontWeight="700" color="#102a43">
+          <Stack spacing={1} sx={{ alignItems: 'center', mb: 3 }}>
+            <AppRegistrationOutlined sx={{ fontSize: 40, color: palette.sky }} />
+            <Typography variant="h5" color={palette.navy} sx={{ fontWeight: 700 }}>
               계정 생성
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -53,77 +70,108 @@ const SignUp = ({
             </Typography>
           </Stack>
 
-          <Stack spacing={2.5}>
-            <TextField
-              fullWidth
-              label="이름"
-              placeholder="홍길동"
-              onChange={(e) => onNameChanged(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonOutlined color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              fullWidth
-              label="이메일 주소"
-              placeholder="example@kt.com"
-              onChange={(e) => onEmailChanged(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailOutlined color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              fullWidth
-              label="비밀번호"
-              type="password"
-              placeholder="비밀번호"
-              onChange={(e) => onPasswordChanged(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockOutlined color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
+          <Box
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSignUpButtonClicked();
+            }}
+          >
+            <Stack spacing={2.5}>
+              <TextField
+                fullWidth
+                label="이름"
+                placeholder="홍길동"
+                value={name}
+                error={Boolean(nameError)}
+                helperText={nameError}
+                onChange={(e) => onNameChanged(e.target.value)}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PersonOutlined color="action" />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+              <TextField
+                fullWidth
+                label="이메일 주소"
+                type="email"
+                placeholder="example@kt.com"
+                value={email}
+                error={Boolean(emailError)}
+                helperText={emailError}
+                onChange={(e) => onEmailChanged(e.target.value)}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailOutlined color="action" />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+              <TextField
+                fullWidth
+                label="비밀번호"
+                type="password"
+                placeholder="8자 이상"
+                value={password}
+                error={Boolean(passwordError)}
+                helperText={passwordError}
+                onChange={(e) => onPasswordChanged(e.target.value)}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlined color="action" />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
 
-            <Button
-              fullWidth
-              variant="contained"
-              size="large"
-              onClick={onSignUpButtonClicked}
-              sx={{
-                py: 1.5,
-                mt: 1,
-                fontSize: '1rem',
-                fontWeight: 'bold',
-                bgcolor: '#102a43', // Dark Navy
-                '&:hover': { bgcolor: '#061727' }
-              }}
-            >
-              회원가입 하기
-            </Button>
-          </Stack>
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                size="large"
+                disabled={!canSubmit}
+                sx={{
+                  py: 1.5,
+                  mt: 1,
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  bgcolor: palette.navy,
+                  '&:hover': { bgcolor: palette.navyDark },
+                }}
+              >
+                {isSubmitting ? '가입 중…' : '회원가입 하기'}
+              </Button>
+            </Stack>
+          </Box>
 
           <Divider sx={{ my: 3 }}>
-            <Typography variant="caption" color="text.secondary">OR</Typography>
+            <Typography variant="caption" color="text.secondary">
+              OR
+            </Typography>
           </Divider>
 
-          <Box component={Link} to={ROUTE_PATHS.signIn} textAlign="center">
-            <Typography variant="body2" color="text.secondary">
-              이미 계정이 있으신가목?{' '}
-              <Button variant="text" sx={{ fontWeight: 'bold', color: '#38bdf8' }}>
-                로그인
-              </Button>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="body2" color="text.secondary" component="span">
+              이미 계정이 있으신가요?{' '}
             </Typography>
+            <ButtonLink
+              to={ROUTE_PATHS.signIn}
+              variant="text"
+              sx={{ fontWeight: 'bold', color: palette.sky }}
+            >
+              로그인
+            </ButtonLink>
           </Box>
         </Paper>
       </Box>

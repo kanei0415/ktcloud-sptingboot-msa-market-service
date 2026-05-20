@@ -1,13 +1,15 @@
-import ProductService from "@services/rest-api/product-service"
-import Product from "../Product"
-import { useMemo } from "react"
+import { useProducts } from '@services/rest-api/product-service';
+import Product from '../Product';
+import QueryStateGate from '@components/common/QueryStateGate/QueryStateGate';
 
 const ProductContainer = () => {
-  const { data } = ProductService.useFetchAllProducts()
+  const { data, isPending, error, refetch } = useProducts();
 
-  const products = useMemo(() => data ? data.products : [], [])
+  return (
+    <QueryStateGate isPending={isPending} error={error} onRetry={() => refetch()}>
+      <Product products={data?.products ?? []} />
+    </QueryStateGate>
+  );
+};
 
-  return <Product products={products} />
-}
-
-export default ProductContainer
+export default ProductContainer;

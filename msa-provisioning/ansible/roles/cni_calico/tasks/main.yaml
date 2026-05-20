@@ -1,0 +1,19 @@
+---
+- name: Calico マニフェストのダウンロード（リトライ付き）
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/projectcalico/calico/{{ calico_version }}/manifests/calico.yaml"
+    dest: "/tmp/calico-{{ calico_version }}.yaml"
+    mode: "0644"
+  register: calico_manifest_dl
+  until: calico_manifest_dl is succeeded
+
+- name: Calico の適用
+  ansible.builtin.command: >
+    kubectl
+      --kubeconfig={{ admin_conf_path }}
+      apply
+      --validate=false
+      -f /tmp/calico-{{ calico_version }}.yaml
+  register: calico_apply
+  until: calico_apply.rc == 0
+  changed_when: "'created' in calico_apply.stdout or 'configured' in calico_apply.stdout"

@@ -1,14 +1,18 @@
-import ProductRestApi from "@libs/rest-api/product/product-rest-api"
-import { useQuery } from "@tanstack/react-query"
+import ProductRestApi from '@libs/rest-api/product/product-rest-api';
+import { useQuery } from '@tanstack/react-query';
+import { productKeys } from '@libs/query-keys';
 
-const useFetchAllProducts = () => {
-  return useQuery({ queryKey: ['products'], queryFn: ProductRestApi.fetchAll })
+export function useProducts() {
+  return useQuery({
+    queryKey: productKeys.lists(),
+    queryFn: ProductRestApi.fetchAll,
+  });
 }
 
-const useFindByIdProduct = (id: string) => {
-  return useQuery({ queryKey: ['product', id], queryFn: () => ProductRestApi.findById(id) })
+export function useProduct(id: string) {
+  return useQuery({
+    queryKey: productKeys.detail(id),
+    queryFn: () => ProductRestApi.findById(id),
+    enabled: Boolean(id),
+  });
 }
-
-const ProductService = { useFetchAllProducts, useFindByIdProduct }
-
-export default ProductService

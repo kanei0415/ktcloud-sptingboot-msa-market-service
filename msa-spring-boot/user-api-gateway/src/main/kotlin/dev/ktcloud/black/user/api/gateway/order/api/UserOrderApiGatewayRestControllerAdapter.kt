@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -30,7 +31,7 @@ class UserOrderApiGatewayRestControllerAdapter(
     @ApiResponse(responseCode = "201", description = "주문 생성 성공")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
-    override suspend fun createOrder(request: CreateOrderRequest): CreateOrderResponse {
+    override suspend fun createOrder(@RequestBody request: CreateOrderRequest): CreateOrderResponse {
         val result = createOrderCommand.createOrder(
             command = request.items.map {
                 CreateOrderCommand.In(
@@ -66,7 +67,7 @@ class UserOrderApiGatewayRestControllerAdapter(
 
     @Operation(summary = "주문 조회")
     @ApiResponse(responseCode = "200", description = "주문 조회 성공")
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.OK)
     @GetMapping("{id}")
     override suspend fun fetchOrder(@PathVariable id: Long): FetchOrderResponse {
         val result = fetchOrderQuery.fetchOrder(

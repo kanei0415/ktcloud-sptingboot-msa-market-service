@@ -26,7 +26,7 @@
         "./src/components/*"
       ],
       "@hooks/*": [
-        "./src/sthooksore/*"
+        "./src/hooks/*"
       ],
       "@libs/*": [
         "./src/libs/*"

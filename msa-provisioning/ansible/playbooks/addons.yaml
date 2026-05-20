@@ -1,0 +1,69 @@
+---
+# ============================================================
+# クラスタ アドオン（IRSA + ASG 対応版）
+# ============================================================
+# 順序:
+#
+#   1) helm                       : helm binary を master に配置
+#   2) irsa_oidc                  : JWKS を S3 に上げ、apiserver の IRSA flag を確認
+#   3) pod_identity_webhook       : ServiceAccount 注入 webhook（IRSA を動かす前提）
+#   4) aws_ccm  (IRSA)            : node の uninitialized taint を除去
+#                                   ── ここで CoreDNS が Running になる
+#   5) (wait kube-system Ready)
+#   6) aws_lbc       (IRSA)       : ALB/NLB を払い出すための controller
+#   7) wait_workers               : ASG worker が join するのを待つ
+#   8) argocd                     : root-app が以下を GitOps で投入
+#                                     - aws-ebs-csi-driver
+#                                     - cluster-autoscaler
+#                                     - external-secrets / istio / kafka / etc
+#
+# aws-ebs-csi-driver と cluster-autoscaler は ArgoCD root-app
+# (ktcloud-k8s-argocd-manifest/Setup/Addons-app.yaml) が wave 0/1 で投入する。
+# Ansible で同名 Helm release を入れると selfHeal/prune と衝突するので
+# ここからは外している。IRSA Role 側 (terraform/irsa.tf) は維持する。
+
+- name: 事前段 — Helm / IRSA OIDC / Pod Identity Webhook / CCM
+  hosts: master
+  become: true
+  vars_files:
+    - "{{ playbook_dir }}/../group_vars/irsa.yaml"
+  roles:
+    - role: helm
+      tags: [helm]
+    - role: irsa_oidc
+      tags: [irsa, oidc]
+    - role: pod_identity_webhook
+      tags: [pod_identity_webhook, irsa]
+    - role: aws_ccm
+      tags: [ccm, aws_ccm]
+
+- name: 本段 — LBC / wait_workers / ArgoCD
+  hosts: master
+  become: true
+  vars_files:
+    - "{{ playbook_dir }}/../group_vars/irsa.yaml"
+  pre_tasks:
+    - name: kube-system の全 pod が Running/Succeeded になるまで待つ
+      ansible.builtin.shell: |
+        set -o pipefail
+        kubectl --kubeconfig={{ admin_conf_path }} get pods -n kube-system \
+          --no-headers \
+          -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,READY:.status.containerStatuses[*].ready' \
+          | awk '{
+              if ($2 != "Running" && $2 != "Succeeded") { print "NOT_READY:"$0; bad=1 }
+              else if ($2 == "Running" && index($3, "false") > 0) { print "NOT_READY:"$0; bad=1 }
+            } END { exit bad ? 1 : 0 }'
+      args:
+        executable: /bin/bash
+      register: kube_system_ready
+      changed_when: false
+      retries: 60
+      delay: 10
+      until: kube_system_ready.rc == 0
+  roles:
+    - role: aws_lbc
+      tags: [lbc, aws_lbc]
+    - role: wait_workers
+      tags: [wait_workers]
+    - role: argocd
+      tags: [argocd]

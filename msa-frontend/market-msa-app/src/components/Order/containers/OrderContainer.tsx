@@ -1,13 +1,15 @@
-import OrderService from "@services/rest-api/order-service"
-import Order from "../Order"
-import { useMemo } from "react"
+import { useOrders } from '@services/rest-api/order-service';
+import Order from '../Order';
+import QueryStateGate from '@components/common/QueryStateGate/QueryStateGate';
 
 const OrderContainer = () => {
-  const { data } = OrderService.fetchAllOrders()
+  const { data, isPending, error, refetch } = useOrders();
 
-  const orders = useMemo(() => data ? data.orders : [], [data])
+  return (
+    <QueryStateGate isPending={isPending} error={error} onRetry={() => refetch()}>
+      <Order orders={data?.orders ?? []} />
+    </QueryStateGate>
+  );
+};
 
-  return <Order orders={orders} />
-}
-
-export default OrderContainer
+export default OrderContainer;

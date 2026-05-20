@@ -1,6 +1,6 @@
 package dev.ktcloud.black.inventory.adapter.infrastructure.jpa.entity
 
-import dev.ktcloud.black.common.domain.entity.BaseOrmEntity
+import dev.ktcloud.black.common.adapter.infrastructure.jpa.BaseOrmEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -14,10 +14,7 @@ import java.sql.Types
 
 @SQLDelete(sql = "UPDATE inventories SET deleted_at = NOW() WHERE id = ?")
 @Entity
-@Table(
-    name = "inventories",
-    uniqueConstraints = [UniqueConstraint(columnNames = ["product_id", "sku_code"])]
-)
+@Table(name = "inventories")
 data class Inventory(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

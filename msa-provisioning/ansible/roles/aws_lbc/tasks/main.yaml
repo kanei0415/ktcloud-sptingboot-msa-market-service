@@ -1,0 +1,45 @@
+---
+# ============================================================
+# AWS Load Balancer Controller (Helm) — IRSA 化
+# ============================================================
+# - ServiceAccount kube-system:aws-load-balancer-controller に
+#   eks.amazonaws.com/role-arn annotation を付け、pod-identity-webhook 経由で
+#   IRSA token を inject させる。
+# - 旧来は node instance profile に LBC ポリシーを乗せていたが、本構成では
+#   Terraform 側で IRSA Role (aws_iam_role.lbc) を作って annotation で結ぶ。
+# - 動作前提: roles/pod_identity_webhook が先に走っていること。
+
+- name: EKS Helm リポジトリの登録
+  kubernetes.core.helm_repository:
+    name: eks
+    repo_url: "https://aws.github.io/eks-charts"
+    state: present
+
+- name: AWS Load Balancer Controller の Helm インストール
+  kubernetes.core.helm:
+    name: aws-load-balancer-controller
+    chart_ref: eks/aws-load-balancer-controller
+    release_namespace: "{{ aws_lbc_namespace }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+    create_namespace: true
+    update_repo_cache: true
+    wait: true
+    values:
+      clusterName: "{{ cluster_name }}"
+      region: "{{ aws_region }}"
+      vpcId: "{{ vpc_id }}"
+      serviceAccount:
+        create: true
+        name: aws-load-balancer-controller
+        annotations:
+          eks.amazonaws.com/role-arn: "{{ irsa_lbc_role_arn }}"
+      # master に寄せる（ASG worker が落ちても LBC は生き残る）
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
+  register: aws_lbc_install
+  retries: 5
+  delay: 20
+  until: aws_lbc_install is success

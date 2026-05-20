@@ -1,69 +1,71 @@
+import { type ReactNode } from 'react';
 import {
   Box,
-  Button,
   Container,
   Typography,
   Stack,
   Grid,
   Paper,
 } from '@mui/material';
-import { Link } from '@tanstack/react-router';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import SecurityIcon from '@mui/icons-material/Security';
 import { ROUTE_PATHS } from '@libs/route-config';
+import { useAuthStore, selectIsAuthenticated } from '@store/useAuthStore';
+import { palette } from '@libs/theme';
+import { ButtonLink } from '@libs/router-link';
 
 function Landing() {
+  const isAuthenticated = useAuthStore(selectIsAuthenticated);
+
   return (
-    <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: palette.surface, minHeight: '100vh' }}>
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #061727 0%, #102a43 100%)',
+          background: `linear-gradient(135deg, ${palette.navyDark} 0%, ${palette.navy} 100%)`,
           color: 'white',
           pt: 12,
           pb: 15,
-          clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)'
+          clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)',
         }}
       >
         <Container maxWidth="md">
-          <Stack spacing={4} alignItems="center" textAlign="center">
-            <CloudQueueIcon sx={{ fontSize: 60, color: '#38bdf8' }} />
-            <Typography variant="h2" fontWeight={800} letterSpacing={-1}>
-              KT Cloud <Box component="span" sx={{ color: '#38bdf8' }}>Market</Box> MSA
+          <Stack spacing={4} sx={{ alignItems: 'center', textAlign: 'center' }}>
+            <CloudQueueIcon sx={{ fontSize: 60, color: palette.sky }} />
+            <Typography
+              variant="h2"
+              sx={{ fontWeight: 800, letterSpacing: -1 }}
+            >
+              KT Cloud{' '}
+              <Box component="span" sx={{ color: palette.sky }}>
+                Market
+              </Box>{' '}
+              MSA
             </Typography>
-            <Typography variant="h5" sx={{ opacity: 0.8, fontWeight: 300, lineHeight: 1.6 }}>
-              확장 가능한 마이크로서비스 아키텍처를 경험하세요.<br />
+            <Typography
+              variant="h5"
+              sx={{ opacity: 0.8, fontWeight: 300, lineHeight: 1.6 }}
+            >
+              확장 가능한 마이크로서비스 아키텍처를 경험하세요.
+              <br />
               기업의 성장을 가속화하는 클라우드 네이티브 솔루션 마켓플레이스입니다.
             </Typography>
 
             <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
-              <Button
+              <ButtonLink
+                to={isAuthenticated ? ROUTE_PATHS.products : ROUTE_PATHS.signIn}
                 variant="contained"
                 size="large"
-                component={Link}
-                to={ROUTE_PATHS.signIn}
                 sx={{
-                  bgcolor: '#38bdf8',
-                  px: 4, py: 1.5,
+                  bgcolor: palette.sky,
+                  px: 4,
+                  py: 1.5,
                   fontSize: '1.1rem',
-                  '&:hover': { bgcolor: '#0ea5e9' }
+                  '&:hover': { bgcolor: palette.skyDark },
                 }}
               >
-                시작하기
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                sx={{
-                  color: 'white',
-                  borderColor: 'white',
-                  px: 4, py: 1.5,
-                  fontSize: '1.1rem',
-                  '&:hover': { borderColor: '#38bdf8', color: '#38bdf8' }
-                }}
-              >
-                서비스 안내
-              </Button>
+                {isAuthenticated ? '대시보드로 이동' : '시작하기'}
+              </ButtonLink>
             </Stack>
           </Stack>
         </Container>
@@ -89,8 +91,7 @@ function Landing() {
         </Grid>
       </Container>
 
-      {/* Footer */}
-      <Box sx={{ py: 5, textAlign: 'center', bgcolor: 'white' }}>
+      <Box sx={{ py: 5, textAlign: 'center', bgcolor: 'background.paper' }}>
         <Typography variant="body2" color="text.secondary">
           © 2026 KT Cloud Market MSA. All Rights Reserved.
         </Typography>
@@ -99,27 +100,39 @@ function Landing() {
   );
 }
 
-// 특장점 카드 컴포넌트
-function FeatureCard({ icon, title, description }: { icon: any, title: string, description: string }) {
+interface FeatureCardProps {
+  icon: ReactNode;
+  title: string;
+  description: string;
+}
+
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <Grid item xs={12} md={4}>
+    <Grid size={{ xs: 12, md: 4 }}>
       <Paper
         elevation={0}
         sx={{
           p: 4,
           textAlign: 'center',
           borderRadius: 4,
-          border: '1px solid #e2e8f0',
+          border: `1px solid ${palette.border}`,
           transition: '0.3s',
-          '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }
+          '&:hover': {
+            transform: 'translateY(-10px)',
+            boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+          },
         }}
       >
         <Box sx={{ mb: 2 }}>{icon}</Box>
-        <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>{title}</Typography>
-        <Typography variant="body2" color="text.secondary">{description}</Typography>
+        <Typography variant="h6" sx={{ mb: 1, fontWeight: 700 }}>
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {description}
+        </Typography>
       </Paper>
     </Grid>
   );
 }
 
-export default Landing
+export default Landing;
